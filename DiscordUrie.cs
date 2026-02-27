@@ -44,7 +44,7 @@ namespace DiscordUrie
             }, new CommandsConfiguration()
             {
                 RegisterDefaultCommandProcessors = false,
-                DebugGuildId = 503219562855006208,
+                //DebugGuildId = 503219562855006208,
             });
             UrieService.AddInteractivityExtension();
             UrieService.ConfigureEventHandlers
