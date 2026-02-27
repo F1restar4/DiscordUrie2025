@@ -154,6 +154,8 @@ namespace DiscordUrie
                     var reactions = cm.TargetMessage.GetReactionsAsync(cm.TargetReaction);
                     await foreach (var user in reactions)
                     {
+                        if (user.IsCurrent)
+                            continue;
                         var member = await cur.GetMemberAsync(user.Id);
                         if (member.Roles.Any(xr => xr == cm.TargetRole))
                             break;
@@ -161,6 +163,8 @@ namespace DiscordUrie
                     }
                     await foreach (var member in allMembers)
                     {
+                        if (member.IsCurrent)
+                            continue;
                         if (member.Roles.Any(xr => xr == cm.TargetRole) && !await reactions.AnyAsync(xr => xr.Id == member.Id))
                             await member.RevokeRoleAsync(cm.TargetRole);
                     }
