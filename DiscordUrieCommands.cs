@@ -12,15 +12,6 @@ namespace DiscordUrie
     public partial class Commands
     {
 
-
-        [Command("test")]
-        public static async ValueTask test(SlashCommandContext ctx)
-        {
-            DiscordEmoji.TryFromName(ctx.Client, ":StaresThroughYourWindow:", out var emote);
-            await ctx.RespondAsync(emote);
-
-        }
-
         [Command("SetReactionRole"), RequireApplicationOwner]
         public static async ValueTask EstablishReactionRole(SlashCommandContext ctx, ulong targetMessage, string targetEmoji, DiscordRole targetRole)
         {
