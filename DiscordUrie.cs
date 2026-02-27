@@ -76,6 +76,8 @@ namespace DiscordUrie
 
             var reactionRole = guildConfig.ReactionRoles.Single(xr => xr.TargetMessage == e.Message && xr.TargetReaction == e.Emoji);
             var member = await e.Guild.GetMemberAsync(e.User.Id);
+            if (!member.Roles.Any(xr => xr == reactionRole.TargetRole))
+                return;
             await member.GrantRoleAsync(reactionRole.TargetRole, "Reaction Role Grant");
         }
 
@@ -92,6 +94,8 @@ namespace DiscordUrie
 
             var reactionRole = guildConfig.ReactionRoles.Single(xr => xr.TargetMessage == e.Message && xr.TargetReaction == e.Emoji);
             var member = await e.Guild.GetMemberAsync(e.User.Id);
+            if (member.Roles.Any(xr => xr == reactionRole.TargetRole))
+                return;
             await member.RevokeRoleAsync(reactionRole.TargetRole, "Reaction Role Removal");
         }
 
