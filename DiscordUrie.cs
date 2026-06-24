@@ -70,6 +70,8 @@ namespace DiscordUrie
             var guildConfig = ConfigData.Single(xr => xr.Guild.Id == e.Guild.Id);
             if (!guildConfig.AutoRoleEnabled)
                 return;
+            if (await e.Guild.GetRoleAsync(guildConfig.AutoRole.Id) == null)
+                return;
             await e.Member.GrantRoleAsync(guildConfig.AutoRole, "Auto role");
         }
         
