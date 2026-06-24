@@ -120,6 +120,8 @@ namespace DiscordUrie
             var channels = await guild.GetChannelsAsync();
             foreach (var cur in rawReactionRoles)
             {
+                if (!channels.Any(xr => xr.Id == cur.TargetChannel) || ! roles.Any(xr => xr.Id == cur.TargetRole))
+                    continue;
                 var channel = channels.Single(xr => xr.Id == cur.TargetChannel);
                 outputData.Add(new(await channel.GetMessageAsync(cur.TargetMessage), roles.Single(xr => xr.Id == cur.TargetRole), channel, DiscordEmoji.FromName(client, cur.TargetReaction)));   
             }
