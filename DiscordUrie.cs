@@ -54,13 +54,23 @@ namespace DiscordUrie
                 .HandleGuildDeleted(GuildRemoved)
                 .HandleMessageReactionAdded(AddReaction)
                 .HandleMessageReactionRemoved(RemoveReaction)
-        
+                .HandleGuildMemberAdded(UserJoined)
             );
 
             UrieProvider = UrieService.BuildServiceProvider();
             Database = new(new SqliteConnection("Data Source=DiscordUrieDB.db;"), UrieProvider);
             var client = UrieProvider.GetRequiredService<DiscordClient>();
             
+        }
+
+        public async Task UserJoined(DiscordClient client, GuildMemberAddedEventArgs e)
+        {
+            if (e.Member.IsCurrent)
+                return;
+            var guildConfig = ConfigData.Single(xr => xr.Guild.Id == e.Guild.Id);
+            if (!guildConfig.AutoRoleEnabled)
+                return;
+            await e.Member.GrantRoleAsync(guildConfig.AutoRole, "Auto role");
         }
         
         public async Task AddReaction(DiscordClient client, MessageReactionAddedEventArgs e)
