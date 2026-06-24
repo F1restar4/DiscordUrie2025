@@ -132,7 +132,16 @@ namespace DiscordUrie
         {
             var client = UrieProvider.GetRequiredService<DiscordClient>();
             var guild = await client.GetGuildAsync(rawData.Id);
-            return new GuildData(guild, rawData.ReactionRolesEnabled, await ParseReactionRoles(guild, rawData.ReactionRoles), rawData.AutoRoleEnabled, rawData.AutoRole != 0 ? await guild.GetRoleAsync(rawData.AutoRole) : null, rawData.NotificationsEnabled, rawData.NotificationChannel != 0 ? await guild.GetChannelAsync(rawData.NotificationChannel) : null);
+            DiscordRole autoRole;
+            try
+            {
+                autoRole = await guild.GetRoleAsync(rawData.AutoRole);
+            }
+            catch
+            {
+                autoRole = null;
+            }
+            return new GuildData(guild, rawData.ReactionRolesEnabled, await ParseReactionRoles(guild, rawData.ReactionRoles), rawData.AutoRoleEnabled, autoRole, rawData.NotificationsEnabled, rawData.NotificationChannel != 0 ? await guild.GetChannelAsync(rawData.NotificationChannel) : null);
         }
 
         public async Task<List<GuildData>> ParseEntities(List<RawGuildData> rawData)
