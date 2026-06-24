@@ -32,7 +32,7 @@ namespace DiscordUrie
                 ctx = ctx
             };
             var scriptOptions = ScriptOptions.Default.WithImports("System", "System.Collections.Generic", "System.Diagnostics", "System.Linq",
-				"System.Reflection", "System.Text", "System.Threading.Tasks", "DSharpPlus", "DSharpPlus.Commands", "DSharpPlus.Entities", "DSharpPlus.EventArgs", "DSharpPlus.Exceptions")
+				"System.Reflection", "System.Text", "System.Threading.Tasks", "DSharpPlus", "DSharpPlus.Commands", "DSharpPlus.Entities", "DSharpPlus.EventArgs", "DSharpPlus.Exceptions", "Microsoft.Extensions.DependencyInjection")
                 .WithReferences(AppDomain.CurrentDomain.GetAssemblies().Where(xa => !xa.IsDynamic && !string.IsNullOrWhiteSpace(xa.Location)));
             object result;
             try
