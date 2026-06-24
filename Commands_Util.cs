@@ -13,7 +13,7 @@ namespace DiscordUrie
     public partial class Commands
     {
 
-        public class globals
+        public class Globals
         {
             public SlashCommandContext ctx;
         }
@@ -27,7 +27,7 @@ namespace DiscordUrie
                 Color = new DiscordColor(0, 255, 255)
             };
             await ctx.RespondAsync(builder);
-            var globals = new globals
+            var globals = new Globals
             {
                 ctx = ctx
             };
@@ -37,7 +37,7 @@ namespace DiscordUrie
             object result;
             try
             {
-                result = await CSharpScript.EvaluateAsync(code, scriptOptions, globals, typeof(globals));
+                result = await CSharpScript.EvaluateAsync(code, scriptOptions, globals, typeof(Globals));
             }
             catch (CompilationErrorException ex)
             {
